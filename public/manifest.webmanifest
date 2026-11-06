@@ -1,0 +1,10 @@
+{
+  "name": "Living Current",
+  "short_name": "Living Current",
+  "description": "Dr. Amina's method, in software.",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#f2f3ee",
+  "theme_color": "#15302b",
+  "icons": [{ "src": "/brand/living-current-icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

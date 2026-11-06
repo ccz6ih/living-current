@@ -4,6 +4,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { PRACTITIONER } from "@/data/seed";
 import { chrono } from "@/engine/chrono";
 import { ELEMENT_LABEL, type Element } from "@/engine/types";
+import { Mark } from "./Logo";
 
 export interface ReportData {
   id: string;
@@ -95,8 +96,8 @@ export function ReportCard({ r, compact = false }: { r: ReportData; compact?: bo
         </div>
       </div>
 
-      <footer className="px-6 py-3 border-t border-line text-xs text-ink-soft">
-        This report is educational and describes a wellness session. It does not diagnose or treat any condition.
+      <footer className="px-6 py-3 border-t border-line text-xs text-ink-soft flex items-center gap-2">
+        <Mark size={18} /> This report is educational and describes a wellness session. It does not diagnose or treat any condition.
       </footer>
     </article>
   );

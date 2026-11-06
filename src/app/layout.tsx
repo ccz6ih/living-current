@@ -17,9 +17,14 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Living Current",
-  description:
-    "Dr. Amina's method, in software. Read the pulse, apply the current, show the client what changed.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://living-current.vercel.app"),
+  title: { default: "Living Current — Dr. Amina's method, in software", template: "%s · Living Current" },
+  description: "Read the pulse, apply the current, show the client what changed. Guided Equiscope and Acuscope protocols by Dr. Amina, point by point.",
+  applicationName: "Living Current",
+  openGraph: { type: "website", siteName: "Living Current", title: "Living Current", description: "Dr. Amina at every practitioner's shoulder." },
+  twitter: { card: "summary_large_image" },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: "Living Current", statusBarStyle: "black-translucent" },
 };
 
 export const viewport: Viewport = {

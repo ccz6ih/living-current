@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
+import { Mark } from "@/components/Logo";
 
 /* ---------- Why software ---------- */
 export function WhySoftware() {
@@ -68,7 +69,8 @@ export function Method() {
             </div>
           ))}
         </div>
-        <blockquote className="mt-14 display text-2xl md:text-3xl max-w-3xl leading-snug text-bone/90">
+        <div className="mt-14"><Mark size={40} ink="var(--bone)" /></div>
+        <blockquote className="mt-4 display text-2xl md:text-3xl max-w-3xl leading-snug text-bone/90">
           Think of it as Dr. Amina at every practitioner's shoulder: her method, applied the way she would, by people she will never meet.
         </blockquote>
       </div>
@@ -266,8 +268,8 @@ function Field({ label, value, onChange, type = "text", required = false, placeh
 export function Footer() {
   return (
     <footer className="border-t border-line">
-      <div className="max-w-6xl mx-auto px-5 py-8 text-xs text-ink-soft flex flex-wrap gap-x-8 gap-y-2">
-        <span>Living Current · The Dr. Amina Method™</span>
+      <div className="max-w-6xl mx-auto px-5 py-8 text-xs text-ink-soft flex flex-wrap items-center gap-x-8 gap-y-2">
+        <span className="inline-flex items-center gap-2"><Mark size={22} /> Living Current · The Dr. Amina Method™</span>
         <span>Educational software for licensed and supervised practitioners. It does not diagnose or treat any condition.</span>
         <span className="ml-auto"><Link href="/app" className="underline underline-offset-4">Practitioner login</Link></span>
       </div>
