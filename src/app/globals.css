@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/*
+  Living Current — design tokens
+  Grounded in the five elements. Pine ink is the brand; the five element
+  hues are the data palette; bone is the room the app lives in.
+*/
+:root {
+  --bone: #f2f3ee;
+  --bone-2: #e8eae3;
+  --paper: #ffffff;
+  --ink: #15302b;
+  --ink-2: #2b4a43;
+  --ink-soft: #5f7571;
+  --line: #d6dad3;
+
+  --wood: #4e8a3c;
+  --fire: #c6482f;
+  --earth: #b8862a;
+  --metal: #7b8589;
+  --water: #2e4f7a;
+
+  --wood-soft: #e5efe0;
+  --fire-soft: #f6e3de;
+  --earth-soft: #f5ead3;
+  --metal-soft: #e9ecee;
+  --water-soft: #dfe6f0;
+
+  --accent: var(--ink);
+  --ring: #b8862a;
+
+  --radius-s: 10px;
+  --radius-m: 18px;
+  --radius-l: 28px;
+}
+
+@theme inline {
+  --color-bone: var(--bone);
+  --color-bone-2: var(--bone-2);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-wood: var(--wood);
+  --color-fire: var(--fire);
+  --color-earth: var(--earth);
+  --color-metal: var(--metal);
+  --color-water: var(--water);
+  --color-wood-soft: var(--wood-soft);
+  --color-fire-soft: var(--fire-soft);
+  --color-earth-soft: var(--earth-soft);
+  --color-metal-soft: var(--metal-soft);
+  --color-water-soft: var(--water-soft);
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --radius-s: var(--radius-s);
+  --radius-m: var(--radius-m);
+  --radius-l: var(--radius-l);
+}
+
+html {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  font-weight: 500;
+}
+
+:focus-visible {
+  outline: 3px solid var(--earth);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Large tap targets: this app is used with one hand while the other stays on the client. */
+.tap {
+  min-height: 56px;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 120ms ease, background-color 120ms ease;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--ink); color: var(--bone); }
+.btn-primary:hover { background: var(--ink-2); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn-ghost:hover { background: var(--bone-2); }
+.btn-earth { background: var(--earth); color: #fff; }
+
+.element-wood { --el: var(--wood); --el-soft: var(--wood-soft); }
+.element-fire { --el: var(--fire); --el-soft: var(--fire-soft); }
+.element-earth { --el: var(--earth); --el-soft: var(--earth-soft); }
+.element-metal { --el: var(--metal); --el-soft: var(--metal-soft); }
+.element-water { --el: var(--water); --el-soft: var(--water-soft); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--bone-2);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 4px solid var(--paper);
+  box-shadow: 0 2px 8px rgba(21, 48, 43, 0.25);
+  cursor: pointer;
+}
