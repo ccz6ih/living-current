@@ -1,0 +1,2 @@
+-- Demo clients, protocols, and historical sessions are kept in src/lib/demo-data.ts.
+-- Do not seed real client or practitioner records into shared environments.
