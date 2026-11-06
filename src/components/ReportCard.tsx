@@ -20,6 +20,7 @@ export interface ReportData {
   nextVisitDays: number;
   homeAdvice: string[];
   bookingUrl: string;
+  homePlan?: { title: string; days: string; steps: string[] };
 }
 
 /**
@@ -61,6 +62,14 @@ export function ReportCard({ r, compact = false }: { r: ReportData; compact?: bo
         <div className="font-semibold mb-1" style={{ color: `var(--${r.focus})` }}>The Chinese medicine view</div>
         <p className="italic">{r.tcmView}</p>
       </div>
+
+      {r.homePlan && (
+        <div className="mx-6 mb-4 rounded-[var(--radius-m)] border border-line p-4 text-sm">
+          <div className="font-semibold">At home with your Neuroscope: {r.homePlan.title}</div>
+          <div className="text-ink-soft text-xs mb-2">{r.homePlan.days}</div>
+          <ol className="list-decimal pl-5 flex flex-col gap-0.5">{r.homePlan.steps.map((st) => <li key={st}>{st}</li>)}</ol>
+        </div>
+      )}
 
       {!compact && (
         <div className="px-6 pb-2 text-sm text-ink-soft">

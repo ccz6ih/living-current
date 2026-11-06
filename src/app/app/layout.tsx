@@ -16,6 +16,7 @@ export default function TabletLayout({ children }: { children: React.ReactNode }
           <Link href="/app" className="hover:underline">Today</Link>
           <Link href="/app/clients/sarah-m" className="hover:underline">Clients</Link>
           <Link href="/app/library" className="hover:underline">Protocol library</Link>
+          <Link href="/app/device" className="hover:underline">Your device</Link>
         </nav>
         <div className="ml-auto text-right leading-tight">
           <div className="text-sm font-semibold">{PRACTITIONER.name}</div>

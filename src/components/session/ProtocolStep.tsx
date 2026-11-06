@@ -7,11 +7,13 @@ import { runEngine } from "@/engine/protocol";
 import { ELEMENT_LABEL } from "@/engine/types";
 import { clientOf, useSessions, type LiveSession } from "@/lib/store";
 import { StepShell } from "./StepShell";
-import { Clock3, RotateCcw } from "lucide-react";
+import { Clock3, RotateCcw, AlertTriangle } from "lucide-react";
+import { DEVICE_BY_ID, translateSetting } from "@/data/devices";
 
 export function ProtocolStep({ session }: { session: LiveSession }) {
-  const { update } = useSessions();
+  const { update, settings } = useSessions();
   const client = clientOf(session);
+  const device = DEVICE_BY_ID[settings.device];
   const listRef = useRef<HTMLOListElement>(null);
 
   // Run the engine once per arrival (or when inputs changed)
@@ -77,17 +79,23 @@ export function ProtocolStep({ session }: { session: LiveSession }) {
             ))}
           </ol>
 
-          <h2 className="text-xl mb-2">Device settings</h2>
-          <div className="grid sm:grid-cols-2 gap-2 mb-5">
-            {out.protocol.deviceSettings.map((d, i) => (
-              <div key={i} className="card p-4">
-                <div className="text-xs text-ink-soft capitalize">{d.mode.replace("-", " ")}</div>
-                <div className="display text-2xl">{d.frequency}</div>
-                <div className="text-sm">{d.waveform} wave</div>
-              </div>
-            ))}
+          <h2 className="text-xl mb-2">Dial settings for your {device.name}</h2>
+          <div className="grid sm:grid-cols-2 gap-2 mb-3">
+            {out.protocol.deviceSettings.map((d, i) => {
+              const t = translateSetting(settings.device, d);
+              return (
+                <div key={i} className="card p-4">
+                  <div className="text-xs text-ink-soft capitalize">{t.unit} · {d.mode.replace("-", " ")}</div>
+                  <div className="display text-2xl">{t.frequency}</div>
+                  <div className="text-sm">{t.waveform} wave</div>
+                  {t.confidence === "pending" && (
+                    <div className="text-xs mt-2 inline-flex items-center gap-1" style={{ color: "var(--earth)" }}><AlertTriangle className="w-3.5 h-3.5" /> Translation to confirm with Jan</div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          <p className="text-xs text-ink-soft">Protocols are built on the Equiscope. Acuscope translation of each step is planned with Jan.</p>
+          <p className="text-xs text-ink-soft">Written on the Equiscope by Dr. Amina. Change your device under Your device.</p>
         </div>
 
         <aside className="flex flex-col gap-4">

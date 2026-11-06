@@ -8,6 +8,7 @@ const LINKS = [
   ["#session", "The session"],
   ["#method", "The method"],
   ["#results", "Results"],
+  ["#devices", "Devices"],
   ["#learn", "Certification"],
   ["#pricing", "Pricing"],
 ];

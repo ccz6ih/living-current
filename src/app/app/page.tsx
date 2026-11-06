@@ -7,11 +7,13 @@ import { chrono } from "@/engine/chrono";
 import { ELEMENT_LABEL } from "@/engine/types";
 import { livingCurrentIndex } from "@/engine";
 import { useSessions } from "@/lib/store";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, ShoppingCart } from "lucide-react";
+import { SUPPLIES, DEVICE_BY_ID } from "@/data/devices";
 import { useEffect, useState } from "react";
 
 export default function TodayPage() {
-  const { startSession, sessions, hydrated } = useSessions();
+  const { startSession, sessions, hydrated, settings } = useSessions();
+  const low = SUPPLIES.filter((s) => (settings.supplies[s.id] ?? 0) < s.par);
   const router = useRouter();
   const [now, setNow] = useState<Date | null>(null);
   useEffect(() => setNow(new Date()), []);
@@ -40,6 +42,14 @@ export default function TodayPage() {
           </Link>
         )}
       </div>
+
+      {hydrated && low.length > 0 && (
+        <div className="card p-4 mb-5 flex flex-wrap items-center gap-3 text-sm">
+          <ShoppingCart className="w-5 h-5" style={{ color: "var(--earth)" }} />
+          <span>Running low on {low.map((s) => s.name.toLowerCase()).join(" and ")} for your {DEVICE_BY_ID[settings.device].name}.</span>
+          <Link href="/app/device" className="underline underline-offset-4 ml-auto">Reorder</Link>
+        </div>
+      )}
 
       <ul className="grid md:grid-cols-2 gap-4">
         {CLIENTS.map((c) => {

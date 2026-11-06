@@ -274,3 +274,30 @@ export function Footer() {
     </footer>
   );
 }
+
+/* ---------- Works with ---------- */
+import { DEVICES } from "@/data/devices";
+
+export function WorksWith() {
+  return (
+    <section id="devices" className="max-w-6xl mx-auto px-5 py-20">
+      <h2 className="text-4xl">Built for the device on your table</h2>
+      <p className="text-ink-soft mt-3 max-w-2xl">
+        Living Current is the software layer the devices never came with. Dr. Amina's protocols are written on the Equiscope; every step is being translated to the Acuscope and Myopulse with Jan Dacri's training team, and a client with a Neuroscope gets a between-visit plan in every report. The app shows the exact dial settings for whichever unit you own.
+      </p>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-10">
+        {DEVICES.map((d) => (
+          <div key={d.id} className="card p-5 flex flex-col">
+            <div className="text-xs text-ink-soft">{d.maker}</div>
+            <h3 className="text-xl mt-1">{d.name}</h3>
+            <p className="text-sm text-ink-soft mt-2 flex-1 leading-relaxed">{d.bestFor}</p>
+            <div className="text-xs mt-4 font-semibold" style={{ color: d.translation === "native" ? "#2d7a5f" : d.translation === "home" ? "var(--water)" : "var(--earth)" }}>
+              {d.translation === "native" ? "Protocols written here" : d.translation === "home" ? "Home device · take-home plans" : "Translation in progress"}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-ink-soft mt-6">Electro-Equiscope, Electro-Acuscope, Myopulse and Neuroscope are trademarks of their respective owners. Living Current is independent software and is not affiliated with or endorsed by the device makers.</p>
+    </section>
+  );
+}

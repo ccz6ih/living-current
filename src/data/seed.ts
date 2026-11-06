@@ -15,6 +15,7 @@ export interface Client {
   email: string;
   sessions: SessionSummary[];
   intake: Intake;
+  homeDevice?: "neuroscope-ne230f";
 }
 
 const wb = (pain: number, stress: number, sleep: number, energy: number): Wellbeing => ({ pain, stress, sleep, energy });
@@ -47,6 +48,7 @@ export const CLIENTS: Client[] = [
     phone: "+1 303 555 0142",
     email: "sarah@example.com",
     intake: SARAH_INTAKE,
+    homeDevice: "neuroscope-ne230f",
     sessions: [
       {
         id: "s6", date: "2026-10-10", goal: "Digestion and steady energy", focus: "earth", points: 4,

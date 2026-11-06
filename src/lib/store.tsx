@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { CLIENT_BY_ID, type Client } from "@/data/seed";
+import type { DeviceId } from "@/data/devices";
 import type {
   EngineOutput,
   Intake,
@@ -54,8 +55,19 @@ export interface LiveSession {
   reportSentAt: string | null;
 }
 
+export interface Settings {
+  device: DeviceId;
+  secondUnit: DeviceId | null;
+  supplies: Record<string, number>;
+  licensed: boolean;
+}
+
+const DEFAULT_SETTINGS: Settings = { device: "equiscope", secondUnit: null, supplies: { gel: 1, "ear-clips": 3, plates: 2, "probe-tips": 1 }, licensed: false };
+
 interface Store {
   sessions: Record<string, LiveSession>;
+  settings: Settings;
+  setSettings: (patch: Partial<Settings>) => void;
   startSession: (client: Client) => LiveSession;
   getSession: (id: string) => LiveSession | undefined;
   update: (id: string, patch: Partial<LiveSession> | ((s: LiveSession) => Partial<LiveSession>)) => void;
@@ -66,18 +78,31 @@ interface Store {
 
 const Ctx = createContext<Store | null>(null);
 const KEY = "living-current:sessions:v1";
+const SKEY = "living-current:settings:v1";
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [sessions, setSessions] = useState<Record<string, LiveSession>>({});
+  const [settings, setSettingsState] = useState<Settings>(DEFAULT_SETTINGS);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(KEY);
       if (raw) setSessions(JSON.parse(raw));
+      const sraw = localStorage.getItem(SKEY);
+      if (sraw) setSettingsState({ ...DEFAULT_SETTINGS, ...JSON.parse(sraw) });
     } catch {}
     setHydrated(true);
   }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      localStorage.setItem(SKEY, JSON.stringify(settings));
+    } catch {}
+  }, [settings, hydrated]);
+
+  const setSettings = useCallback((patch: Partial<Settings>) => setSettingsState((s) => ({ ...s, ...patch })), []);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -143,6 +168,8 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<Store>(
     () => ({
       sessions,
+      settings,
+      setSettings,
       startSession,
       getSession: (id) => sessions[id],
       update,
@@ -150,7 +177,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       reset,
       hydrated,
     }),
-    [sessions, startSession, update, logTone, reset, hydrated],
+    [sessions, settings, setSettings, startSession, update, logTone, reset, hydrated],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

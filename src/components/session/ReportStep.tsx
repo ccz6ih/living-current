@@ -6,12 +6,13 @@ import { ReportCard, type ReportData } from "@/components/ReportCard";
 import { IndexBars, IndexDial } from "@/components/IndexDial";
 import { livingCurrentIndex } from "@/engine";
 import { PROTOCOL_BY_ID } from "@/data/protocols";
+import { HOME_PLANS } from "@/data/devices";
 import { clientOf, useSessions, type LiveSession } from "@/lib/store";
 import { StepShell } from "./StepShell";
 import { Check, Mail, MessageSquare } from "lucide-react";
 
 export function ReportStep({ session }: { session: LiveSession }) {
-  const { update } = useSessions();
+  const { update, settings } = useSessions();
   const client = clientOf(session);
   const out = session.engine;
   const [sending, setSending] = useState(false);
@@ -47,6 +48,7 @@ export function ReportStep({ session }: { session: LiveSession }) {
     nextVisitDays: out.protocol.nextVisitDays,
     homeAdvice: out.protocol.homeAdvice,
     bookingUrl: typeof window !== "undefined" ? `${window.location.origin}/book/${client.id}` : "/book",
+    homePlan: client.homeDevice ? HOME_PLANS[out.protocol.focus] : undefined,
   };
 
   const send = () => {
@@ -69,6 +71,7 @@ export function ReportStep({ session }: { session: LiveSession }) {
             </button>
             <Link href={`/r/${session.id}`} className="btn btn-ghost tap">Open the client's view</Link>
             <Link href={`/checkin/${session.id}-24`} className="btn btn-ghost tap"><MessageSquare className="w-4 h-4" /> Preview the 24 h check-in</Link>
+            {settings.licensed && <Link href={`/app/session/${session.id}/note`} className="btn btn-ghost tap">Session note and superbill</Link>}
           </div>
           {session.reportSentAt && (
             <p className="text-sm text-ink-soft mt-3">

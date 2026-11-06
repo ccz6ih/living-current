@@ -6,6 +6,7 @@ import { ReportCard, type ReportData } from "@/components/ReportCard";
 import { CLIENT_BY_ID } from "@/data/seed";
 import { PROTOCOLS, PROTOCOL_BY_ID } from "@/data/protocols";
 import { useSessions } from "@/lib/store";
+import { HOME_PLANS } from "@/data/devices";
 import { ReadingsTracker } from "@/components/Tracker";
 import { BookOpen } from "lucide-react";
 
@@ -47,6 +48,7 @@ export default function ReportPage() {
       nextVisitDays: live.engine.protocol.nextVisitDays,
       homeAdvice: live.engine.protocol.homeAdvice,
       bookingUrl: `/book/${c.id}`,
+      homePlan: c.homeDevice ? HOME_PLANS[live.engine.protocol.focus] : undefined,
     };
   } else {
     // seeded: "<clientId>-<sessionId>"
@@ -74,6 +76,7 @@ export default function ReportPage() {
         nextVisitDays: proto.nextVisitDays,
         homeAdvice: proto.homeAdvice,
         bookingUrl: `/book/${c.id}`,
+        homePlan: c.homeDevice ? HOME_PLANS[s.focus] : undefined,
       };
     }
   }

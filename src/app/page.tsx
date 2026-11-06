@@ -1,7 +1,7 @@
 import { Nav } from "@/components/landing/Nav";
 import { Hero } from "@/components/landing/Hero";
 import { SessionWalk } from "@/components/landing/SessionWalk";
-import { Footer, Method, Pilot, Pricing, Results, TeachingPath, Trust, WhoFor, WhySoftware } from "@/components/landing/Sections";
+import { Footer, Method, Pilot, Pricing, Results, TeachingPath, Trust, WhoFor, WhySoftware, WorksWith } from "@/components/landing/Sections";
 
 export default function Landing() {
   return (
@@ -12,6 +12,7 @@ export default function Landing() {
       <SessionWalk />
       <Method />
       <Results />
+      <WorksWith />
       <TeachingPath />
       <WhoFor />
       <Pricing />
